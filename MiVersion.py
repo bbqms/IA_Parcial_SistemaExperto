@@ -76,14 +76,18 @@ def Generar_Dieta():
     r4 = rn.randint(0,len(desayuno)-1)
     r5 = rn.randint(0,len(cena)-1)
 
+    Recomendacion.append(('DESAYUNO', '\n'))
     Recomendacion.append(desayuno[r1])
     Recomendacion.append(desayuno[r2])
+    Recomendacion.append(('\nALMUERZO', '\n'))
     Recomendacion.append(almuerzo[r3])
     Recomendacion.append(almuerzo[r4])
+    Recomendacion.append(('\nCENA', '\n'))
     Recomendacion.append(cena[r5])
 
     for i in Recomendacion:
-        TotalCal = TotalCal + i[1]
+        if type(i[1]) is not str:
+            TotalCal = TotalCal + i[1]
 
 
 
@@ -94,6 +98,8 @@ def Recomendar_Dieta(peso, altura, edad, sexo, actividad):
     else:
         TMB = 655 + (9.6 * peso) + (1.8 * altura) - (4.7 * edad)
     print(TMB)
+
+    TMB = TMB * actividad
     
     while TotalCal > TMB + 100 or TotalCal < TMB - 400:
         Generar_Dieta()
