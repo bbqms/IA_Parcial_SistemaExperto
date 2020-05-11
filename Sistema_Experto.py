@@ -41,8 +41,6 @@ for i in range(len(P2)):
 #print(run(0,(PL,T),EsTipo(PL,T)))
 
 
-#print(run(0,(Plato,CA,T),Calorias(Plato,CA), EsTipo(Plato,T)))
-
 #Te devuelve un tipo lista
 a = run(0,(CA),Calorias(Plato,CA))
 
@@ -97,13 +95,13 @@ def Recomendar_Dieta(peso, altura, edad, sexo, actividad):
         TMB = 66 + (13.7 * peso) + (5 * altura) - (6.75 * edad)
     else:
         TMB = 655 + (9.6 * peso) + (1.8 * altura) - (4.7 * edad)
-    print(TMB)
+    print("Calorias Maximas: ",TMB)
 
     TMB = TMB * actividad
     
     while TotalCal > TMB + 100 or TotalCal < TMB - 400:
         Generar_Dieta()
-    print(TotalCal)
+    print("Total Calorias en las comidas:", TotalCal)
     return Recomendacion
 
 
@@ -114,35 +112,3 @@ print(Recomendar_Dieta(90, 182, 19, 'Masculino',1))
 
 
 
-
-
-
-
-
-#print(Recomendacion)
-#print (TotalCal)
-
-#print(len(desayuno))
-
-#print(desayuno)
-#print(almuerzo)
-#print(cena)
-
-
-
-
-
-
-#print( 5 + a[0])
-
-
-
-
-
-#Enfermedad = "stress"
-
-# REGLQAS DE MOTOR DE INFERENCIAS
-#print(run(0,(Enfermedad,T,M),Bueno(A,Enfermedad), Ingrediente(A,M),Estipo(M,T)))
-
-## todo alimento es bueno para alguna enfermedad y este alimento es ingrediente de algun menu y el menu es un tipo de plato que se puede servir
-## para todo A, Existe enfermedad, Existe M, Existe T [Bueno(A,Enfermedad) y Ingrediente(A,M) y Estipo(M,T)=> (T,M)]

@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-from MiVersion import Recomendar_Dieta 
+from Sistema_Experto import Recomendar_Dieta 
 
 # VARIABLES
 
