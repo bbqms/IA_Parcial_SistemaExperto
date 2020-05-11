@@ -1,5 +1,9 @@
 from kanren import *
 import pandas as pd
+import random as rn
+
+Recomendacion = []
+TotalCal = 0
 
 
 ArchCalorias = pd.read_excel('Calorias.xlsx')
@@ -15,12 +19,9 @@ T2 = ArchTipo['Tipo'].values
 
 
 #base de conocimiento
-
 PL = var()
 CA = var()
 T = var()
-
-
 
 Calorias = Relation()
 EsTipo = Relation()
@@ -29,64 +30,108 @@ Plato = 'Empanada de carne'
 
 
 
+
 for i in range(len(P1)):
     fact(Calorias,P1[i],C1[i])
-print(run(0,(Plato,CA),Calorias(Plato,CA)))
+#print(run(0,(Plato,CA),Calorias(Plato,CA)))
 
 
 for i in range(len(P2)):
     fact(EsTipo,P2[i],T2[i])
-print(run(0,(PL,T),EsTipo(PL,T)))
+#print(run(0,(PL,T),EsTipo(PL,T)))
 
 
-print(run(0,(Plato,CA,T),Calorias(Plato,CA), EsTipo(Plato,T)))
+#print(run(0,(Plato,CA,T),Calorias(Plato,CA), EsTipo(Plato,T)))
 
 #Te devuelve un tipo lista
 a = run(0,(CA),Calorias(Plato,CA))
 
 
+Tipo1 = "Desayuno"
+desayuno = run(0,(PL,CA),Calorias(PL,CA),EsTipo(PL,Tipo1))
+
+
+Tipo2 = "Almuerzo"
+almuerzo = run(0,(PL,CA),Calorias(PL,CA),EsTipo(PL,Tipo2))
+
+
+Tipo3 = "Cena"
+cena = run(0,(PL,CA),Calorias(PL,CA),EsTipo(PL,Tipo3))
 
 
 
 
 
 
-peso = 90
-altura = 180
-edad = 19
-
-#Hombres: 
-TMB = 66 + (13.7 * peso) + (5 * altura) - (6.75 * edad)
-
-#Mujeres
-#Mujeres: TMB = 655 + (9.6 * peso) + (1.8 x altura) - (4.7 x edad)
-
-#TMB x 1,2: Poco o ningún ejercicio
-#TMB x 1,375: Ejercicio ligero (1 a 3 días a la semana)
-#TMB x 1,55: Ejercicio moderado (3 a 5 días a la semana)
-#TMB x 1,72: Deportista (6 -7 días a la semana)
-#TMB x 1,9: Atleta (Entrenamientos mañana y tarde)
 
 
-print( 5 + a[0])
+def Generar_Dieta():
+    global TotalCal 
+    global Recomendacion
+    Recomendacion = []
+    TotalCal = 0
+    r1 = rn.randint(0,len(desayuno)-1)
+    r2 = rn.randint(0,len(desayuno)-1)
+    r3 = rn.randint(0,len(almuerzo)-1)
+    r4 = rn.randint(0,len(desayuno)-1)
+    r5 = rn.randint(0,len(cena)-1)
 
-print(TMB)
+    Recomendacion.append(desayuno[r1])
+    Recomendacion.append(desayuno[r2])
+    Recomendacion.append(almuerzo[r3])
+    Recomendacion.append(almuerzo[r4])
+    Recomendacion.append(cena[r5])
+
+    for i in Recomendacion:
+        TotalCal = TotalCal + i[1]
+
+
+
+def Recomendar_Dieta(peso, altura, edad, sexo, actividad):
+    global TotalCal
+    if sexo == 'Masculino':
+        TMB = 66 + (13.7 * peso) + (5 * altura) - (6.75 * edad)
+    else:
+        TMB = 655 + (9.6 * peso) + (1.8 * altura) - (4.7 * edad)
+    print(TMB)
+    
+    while TotalCal > TMB + 100 or TotalCal < TMB - 400:
+        Generar_Dieta()
+    print(TotalCal)
+    return Recomendacion
+
+
+
+print(Recomendar_Dieta(90, 182, 19, 'Masculino',1))
 
 
 
 
 
-"""for i in range(len(P1)):
-    fact(Ingrediente,P1[i],M1[i])
-print(run(0,(P,E),Ingrediente(P,E)))
 
-for i in range(len(M2)):
-    fact(Estipo,M2[i],T2[i])
-print(run(0,(P,E),Estipo(P,E)))
 
-for i in range(len(P3)):
-    fact(Bueno,P3[i],E3[i])
-print(run(0,(P,E),Bueno(P,E)))"""
+
+
+
+#print(Recomendacion)
+#print (TotalCal)
+
+#print(len(desayuno))
+
+#print(desayuno)
+#print(almuerzo)
+#print(cena)
+
+
+
+
+
+
+#print( 5 + a[0])
+
+
+
+
 
 #Enfermedad = "stress"
 
